@@ -1,4 +1,3 @@
-# backend/app.py
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -10,12 +9,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Allow requests from React frontend
+CORS(app)  
 
 @app.route("/ping")
 def ping():
     return "pong"
 
+# General full-song analysis from search query
 @app.route("/api/interpret", methods=["POST"])
 def interpret():
     data = request.get_json()
@@ -25,9 +25,12 @@ def interpret():
         return jsonify({"error": "Missing query"}), 400
 
     try:
+        print(f"🔍 Searching for: {query}")
         artist, title = search_song(query)
+        print(f"🎵 Found: {artist} — {title}")
         lyrics = fetch_lyrics(artist, title)
-        explanation = explain_lyrics(lyrics)
+        print(f"📝 Lyrics fetched ({len(lyrics)} chars)")
+        explanation = explain_lyrics(lyrics, lyrics)  # full + full as fallback
         mood = detect_mood(lyrics)
 
         return jsonify({
@@ -38,8 +41,29 @@ def interpret():
             "mood": mood
         })
     except Exception as e:
+        print(f"❌ Error during interpretation: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/explain-snippet", methods=["POST"])
+def explain_snippet():
+    data = request.get_json()
+    snippet = data.get("snippet")
+    full_lyrics = data.get("full_lyrics")
+
+    if not snippet or not full_lyrics:
+        return jsonify({"error": "Missing snippet or full lyrics"}), 400
+
+    try:
+        explanation = explain_lyrics(full_lyrics, snippet)  
+        mood = detect_mood(snippet)
+
+        return jsonify({
+            "snippet": snippet,
+            "explanation": explanation,
+            # "mood": mood
+        })
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    # Enable external access in dev and allow reload on code change
     app.run(host="0.0.0.0", port=5000, debug=True)
