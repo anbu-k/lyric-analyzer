@@ -205,7 +205,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="panel-content">
-            <h2>📝 Explanation Panel</h2>
+            <h2>Explanation Panel</h2>
 
             {snippetLoading && (
               <p className="loading-text">Loading interpretation...</p>
