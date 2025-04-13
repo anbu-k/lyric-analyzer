@@ -1,0 +1,158 @@
+.app-container {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f2f2f7;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-layout {
+  display: flex;
+  height: calc(100% - 64px); 
+  position: relative;
+  overflow: visible;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.title {
+  color: #1a1a2e;
+}
+
+.input-group {
+  margin-bottom: 2rem;
+}
+
+.input-box {
+  width: 300px;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  margin-top: 2rem;
+  margin-left: 40rem;
+  border-radius: 10px;
+  border: 1px solid #b40a0a;
+}
+
+.fetch-button {
+  background-color: #ff4c60;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.lyrics-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.lyric-line {
+  position: relative;
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.lyric-line.hovered {
+  background-color: #f0f0f0;
+}
+
+.line-hint {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #888;
+}
+
+.error-text {
+  color: red;
+}
+
+
+.toggle-button-wrapper {
+  position: absolute;
+  left: -10px; 
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+.toggle-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px 0 0 6px; 
+  border: 1px solid #ccc;
+  border-right: 1; 
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.side-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 400px;
+  transform: translateX(calc(100% - 32px)); 
+  transition: transform 0.4s ease;
+  border-left: 1px solid #ccc;
+  background: #fff;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.side-panel.open {
+  transform: translateX(0);
+}
+
+
+.side-panel:not(.open) .toggle-button::after {
+  content: '🡄';
+}
+
+.side-panel.open .toggle-button::after {
+  content: '🡆';
+}
+
+.panel-content {
+  padding: 2rem;
+}
+
+.loading-text {
+  font-style: italic;
+  color: #666;
+}
+
+.quote-box {
+  background: #f0f0f0;
+  padding: 0.5rem;
+  font-style: italic;
+  margin-left: 0px;
+}
+
+.section-heading {
+  margin-top: 50px;
+}
+
+.interpretation p {
+  margin-bottom: 1rem;
+  margin-top: 40px;
+}
