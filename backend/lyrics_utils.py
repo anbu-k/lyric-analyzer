@@ -1,4 +1,3 @@
-# backend/lyrics_utils.py
 import requests
 
 def fetch_lyrics(artist, title):

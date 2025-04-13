@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from spotify_utils import search_song
+from spotify_utils import search_song, get_search_suggestions
 from lyrics_utils import fetch_lyrics
 from ai_utils import explain_lyrics, detect_mood
 from dotenv import load_dotenv
@@ -15,7 +15,19 @@ CORS(app)
 def ping():
     return "pong"
 
-# General full-song analysis from search query
+@app.route("/api/spotify-suggestions", methods=["GET"])
+def spotify_suggestions():
+    query = request.args.get("q")
+    if not query:
+        return jsonify({"error": "Missing query parameter"}), 400
+
+    try:
+        suggestions = get_search_suggestions(query)
+        return jsonify(suggestions)
+    except Exception as e:
+        print(f"Error in suggestions endpoint: {e}")
+        return jsonify({"error": str(e)}), 500
+    
 @app.route("/api/interpret", methods=["POST"])
 def interpret():
     data = request.get_json()

@@ -1,4 +1,3 @@
-# backend/spotify_utils.py
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -17,3 +16,23 @@ def search_song(query):
     artist = track['artists'][0]['name']
     title = track['name']
     return artist, title
+
+def get_search_suggestions(query, limit=5):
+    """New function for getting search suggestions with album art"""
+    try:
+        results = sp.search(q=query, type='track', limit=limit)
+        suggestions = []
+        for track in results['tracks']['items']:
+            suggestions.append({
+                'id': track['id'],
+                'name': track['name'],
+                'artists': [artist['name'] for artist in track['artists']],
+                'album': {
+                    'name': track['album']['name'],
+                    'image': track['album']['images'][0]['url'] if track['album']['images'] else None
+                }
+            })
+        return suggestions
+    except Exception as e:
+        print(f"Error fetching Spotify suggestions: {e}")
+        return []

@@ -19,19 +19,20 @@
 }
 
 .title {
-  color: #1a1a2e;
+  color: #000000;
 }
 
 .input-group {
   margin-bottom: 2rem;
+  position: relative; 
 }
 
 .input-box {
   width: 300px;
   padding: 0.5rem;
-  margin-right: 1rem;
+  margin-right: 0rem;
   margin-top: 2rem;
-  margin-left: 40rem;
+  margin-left: 42rem;
   border-radius: 10px;
   border: 1px solid #b40a0a;
 }
@@ -61,15 +62,18 @@
   line-height: 1.5;
   cursor: pointer;
   transition: background 0.2s ease;
+  color: #332849;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .lyric-line.hovered {
   background-color: #f0f0f0;
+  color: #b215e270;
 }
 
 .line-hint {
   position: absolute;
-  right: 12px;
+  margin-left: 100px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 12px;
@@ -79,7 +83,6 @@
 .error-text {
   color: red;
 }
-
 
 .toggle-button-wrapper {
   position: absolute;
@@ -123,7 +126,6 @@
   transform: translateX(0);
 }
 
-
 .side-panel:not(.open) .toggle-button::after {
   content: '🡄';
 }
@@ -154,5 +156,103 @@
 
 .interpretation p {
   margin-bottom: 1rem;
-  margin-top: 40px;
+  margin-top: 10px;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 40rem;
+  width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestion-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.suggestion-text {
+  flex: 1;
+  overflow: hidden;
+}
+
+.suggestion-title {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-artist {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-empty {
+  padding: 8px 12px;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.song-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(270deg, #ff4c60, #b215e2, #4a00e0);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 8s ease infinite;
+  display: inline-block;
+  padding: 0.2rem 0;
+}
+
+.song-artist {
+  font-size: 1.5rem;
+  background: linear-gradient(270deg, #4a00e0, #b215e2, #ff4c60);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 8s ease infinite reverse;
+  display: inline-block;
+  padding: 0.2rem 0;
+}
+
+.song-title-container {
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
