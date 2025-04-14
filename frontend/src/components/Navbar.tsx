@@ -7,9 +7,9 @@ const Navbar: React.FC = () => {
       <div className="navbar-logo">🎧 LyricIQ</div>
       <div className="navbar-links">
         <a href="#">Home</a>
-        {/* <a href="https://github.com/anbu-k" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/anbu-k" target="_blank" rel="noopener noreferrer">
           GitHub
-        </a> */}
+        </a>
       </div>
     </nav>
   );

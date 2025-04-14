@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import Navbar from "./components/Navbar";
-import "./css/App.css";
+import Navbar from "../components/Navbar";
+import "../css/App.css";
 
 const App: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -15,6 +15,10 @@ const App: React.FC = () => {
   const [snippetLoading, setSnippetLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState<number | null>(null);
+  const [selectionEnd, setSelectionEnd] = useState<number | null>(null);
+  
 
   const fetchSuggestions = useCallback(
     debounce(async (searchQuery: string) => {
@@ -80,6 +84,34 @@ const App: React.FC = () => {
     } finally {
       setSnippetLoading(false);
     }
+  };
+
+  const handleSelectionStart = (idx: number) => {
+    setIsSelecting(true);
+    setSelectionStart(idx);
+    setSelectionEnd(idx);
+  };
+
+  const handleSelectionMove = (idx: number) => {
+    if (isSelecting) {
+      setSelectionEnd(idx);
+    }
+  };
+
+  const handleSelectionEnd = () => {
+    setIsSelecting(false);
+    if (selectionStart !== null && selectionEnd !== null) {
+      const start = Math.min(selectionStart, selectionEnd);
+      const end = Math.max(selectionStart, selectionEnd);
+      const selectedLines = result.lyrics
+        .split(/\r?\n/)
+        .filter((line: string) => line.trim() !== '')
+        .slice(start, end + 1)
+        .join('\n');
+      handleSnippetExplain(selectedLines);
+    }
+    setSelectionStart(null);
+    setSelectionEnd(null);
   };
 
   return (
@@ -168,26 +200,36 @@ const App: React.FC = () => {
                 <span> — </span>
                 <span className="song-artist">{result.artist}</span>
               </h2>
-              <div className="lyrics-box">
+              <div className={`lyrics-box ${isSelecting ? 'selecting' : ''}`}>
                 {result.lyrics
                   .split(/\r?\n/)
-                  .filter((line: string) => line.trim() !== "")
-                  .map((line: string, idx: number) => (
-                    <div
-                      key={idx}
-                      className={`lyric-line ${
-                        hoveredLine === idx ? "hovered" : ""
-                      }`}
-                      onClick={() => handleSnippetExplain(line)}
-                      onMouseEnter={() => setHoveredLine(idx)}
-                      onMouseLeave={() => setHoveredLine(null)}
-                    >
-                      {line}
-                      {hoveredLine === idx && (
-                        <span className="line-hint">💡 Click to analyze</span>
-                      )}
-                    </div>
-                  ))}
+                  .filter((line: string) => line.trim() !== '')
+                  .map((line: string, idx: number) => {
+                    const isSelected = selectionStart !== null && 
+                                      selectionEnd !== null && 
+                                      idx >= Math.min(selectionStart, selectionEnd) && 
+                                      idx <= Math.max(selectionStart, selectionEnd);
+                    
+                    return (
+                      <div
+                        key={idx}
+                        className={`lyric-line ${hoveredLine === idx ? 'hovered' : ''} ${isSelected ? 'selected' : ''}`}
+                        onClick={() => handleSnippetExplain(line)}
+                        onMouseDown={() => handleSelectionStart(idx)}
+                        onMouseEnter={() => {
+                          setHoveredLine(idx);
+                          handleSelectionMove(idx);
+                        }}
+                        onMouseUp={handleSelectionEnd}
+                        data-idx={idx}
+                      >
+                        {line}
+                        {hoveredLine === idx && (
+                          <span className="line-hint">💡 Click to analyze a single line, Click and drag to analyze multiple lines</span>
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           )}
@@ -212,7 +254,7 @@ const App: React.FC = () => {
             )}
 
             {!snippetLoading && !snippetResult && (
-              <p>Click a lyric line to see its interpretation.</p>
+              <p style={{marginTop: "-10px"}}>Click or drag lyrics to analyze</p>
             )}
 
             {!snippetLoading && snippetResult?.error && (
@@ -221,7 +263,7 @@ const App: React.FC = () => {
 
             {!snippetLoading && snippetResult && !snippetResult.error && (
               <>
-                <h3>Selected Line</h3>
+                <h3>Selected Line(s)</h3>
                 <blockquote className="quote-box">
                   {snippetResult.snippet}
                 </blockquote>
