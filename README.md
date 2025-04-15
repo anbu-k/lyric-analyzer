@@ -20,9 +20,9 @@
 - View focused interpretations in a clean sidebar panel
 
 ![image](https://github.com/user-attachments/assets/614d16dc-d61b-4061-8486-3bc3195940d3)
+![image](https://github.com/user-attachments/assets/e18ce115-a711-4ec8-aef1-31f2b4fdec35)
 ![image](https://github.com/user-attachments/assets/df2f0ab6-0695-46e4-a265-31b49a6d63ff)
 ![image](https://github.com/user-attachments/assets/1880c027-df8a-4659-bfb7-8a114ee89099)
-![image](https://github.com/user-attachments/assets/7df94448-c367-49bf-9a68-0c9910ce5862)
 
 
 ### Sample Detection
