@@ -27,7 +27,7 @@
 
 ## Tech Stack
 
-### 🖥Frontend
+### Frontend
 - React + TypeScript
 - React Router
 - Axios for API requests
