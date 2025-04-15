@@ -36,3 +36,7 @@ def get_search_suggestions(query, limit=5):
     except Exception as e:
         print(f"Error fetching Spotify suggestions: {e}")
         return []
+    
+def get_track_preview_url(track_id):
+    track = sp.track(track_id)
+    return track.get('preview_url')

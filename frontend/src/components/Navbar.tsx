@@ -6,7 +6,8 @@ const Navbar: React.FC = () => {
     <nav className="navbar">
       <div className="navbar-logo">🎧 LyricIQ</div>
       <div className="navbar-links">
-        <a href="#">Home</a>
+        <a href="/">Home</a>
+        <a href="/samples">Sample Finder</a>
         <a href="https://github.com/anbu-k" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>

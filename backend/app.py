@@ -1,9 +1,11 @@
 import os
+import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from spotify_utils import search_song, get_search_suggestions
 from lyrics_utils import fetch_lyrics
-from ai_utils import explain_lyrics, detect_mood
+from ai_utils import explain_lyrics, detect_mood, detect_samples_gpt
+from youtube_utils import search_youtube_video
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -75,6 +77,37 @@ def explain_snippet():
             # "mood": mood
         })
     except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route("/api/get-samples-ai", methods=["POST"])
+def get_samples_ai():
+    data = request.get_json()
+    artist = data.get("artist")
+    title = data.get("title")
+
+    if not artist or not title:
+        return jsonify({"error": "Missing artist or title"}), 400
+
+    try:
+        print(f"🔍 Detecting samples for: {artist} - {title}")
+        sample_info_raw = detect_samples_gpt(artist, title)
+        print("🧠 GPT Response:", sample_info_raw)
+
+        # Parse and validate
+        sample_info = json.loads(sample_info_raw)
+        if not isinstance(sample_info, list):
+            raise ValueError("GPT returned non-list JSON")
+
+        # Enhance with real YouTube links
+        for sample in sample_info:
+            query = f"{sample.get('sample_artist', '')} {sample.get('sample_title', '')}"
+            real_link = search_youtube_video(query)
+            if real_link:
+                sample["youtube_link"] = real_link
+
+        return jsonify({"samples": sample_info})
+    except Exception as e:
+        print(f"❌ Error fetching sample info: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":

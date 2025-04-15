@@ -304,7 +304,7 @@
 .suggestions-dropdown {
   position: absolute;
   top: 100%;
-  left: 40rem;
+  left: 42.5rem;
   width: 300px;
   background: white;
   border: 1px solid #ddd;
@@ -400,3 +400,116 @@
   text-align: left;
 }
 
+.fade-in {
+  animation: fadeInUp 0.6s ease-out both;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* YouTube video preview styling */
+.video-preview {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.video-thumbnail {
+  width: 160px;
+  height: 90px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.video-label {
+  font-size: 14px;
+  color: #007aff;
+  font-weight: 500;
+}
+
+.sample-song-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sample-song-title {
+  font-size: 2.2rem;
+  background: linear-gradient(270deg, #ff4c60, #b215e2, #4a00e0);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 8s ease infinite;
+  margin-bottom: 0.4rem;
+}
+
+.sample-song-artist {
+  font-size: 1.4rem;
+  color: #c41c82;
+  font-weight: 500;
+  animation: gradientFlow 8s ease infinite reverse;
+}
+
+.sample-box {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.8rem;
+  background: #fff;
+  margin-top: 1.5rem;
+}
+
+.sample-entry {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.sample-title {
+  font-size: 1.1rem;
+  color: #332849;
+  font-weight: 600;
+}
+
+.sample-meta {
+  margin-top: 0.5rem;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sample-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+
+.sample-thumbnail {
+  width: 200px;
+  height: 112px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.sample-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #007aff;
+  margin-left: 0.4rem;
+}

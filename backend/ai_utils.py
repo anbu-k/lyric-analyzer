@@ -37,6 +37,39 @@ Selected snippet to interpret:
     )
     return response['choices'][0]['message']['content']
 
+def detect_samples_gpt(artist: str, title: str) -> str:
+    prompt = f"""
+You are a music historian and expert in hip-hop, R&B, pop, and electronic music production. Given a song title and artist, identify any known or suspected samples used in the song.
+
+ONLY return a list of real, verifiable samples. If there are no known samples, return an empty list: []
+
+For each sample, include:
+- "sample_title"
+- "sample_artist"
+- "explanation"
+
+Do not guess. Do not include placeholders like "No known samples" — just return an empty array if none are found.
+
+Format the entire response as a JSON array like:
+[
+  {{
+    "sample_title": "Song Title",
+    "sample_artist": "Original Artist",
+    "explanation": "Why it was used, what part, or cultural relevance."
+  }}
+]
+
+Song title: "{title}"
+Artist: "{artist}"
+"""
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[{ "role": "user", "content": prompt }],
+        max_tokens=1000,
+        temperature=0.7,
+    )
+    return response['choices'][0]['message']['content']
+
 
 def detect_mood(lyrics: str) -> str:
     blob = TextBlob(lyrics)

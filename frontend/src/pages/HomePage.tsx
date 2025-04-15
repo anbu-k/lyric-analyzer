@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import Navbar from "../components/Navbar";
 import "../css/App.css";
 
 const App: React.FC = () => {
@@ -116,7 +115,6 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container">
-      <Navbar />
       <div className="main-layout">
         <div className="main-content">
           <div className="input-group" style={{ position: "relative" }}>
@@ -129,7 +127,7 @@ const App: React.FC = () => {
               }}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              placeholder="Enter a song (e.g., Hello Adele)"
+              placeholder="Type in a song"
               className="input-box"
               onKeyDown={(e) => e.key === "Enter" && handleFullExplain()}
             />
@@ -138,7 +136,7 @@ const App: React.FC = () => {
                 style={{
                   position: "absolute",
                   top: "100%",
-                  left: "40rem",
+                  left: "42.5rem",
                   width: "300px",
                   backgroundColor: "white",
                   border: "1px solid #ddd",
