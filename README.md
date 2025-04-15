@@ -1,5 +1,4 @@
-🎧 LyricIQ
-LyricIQ is an interactive web application that helps users interpret song lyrics. It also detects musical samples used in songs.
+🎧 LyricIQ is an interactive web application that helps users interpret song lyrics. It also detects musical samples used in songs.
 
 Features
 - Lyrics Analysis
