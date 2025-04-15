@@ -4,7 +4,7 @@
 
 ---
 
-## Features
+## Current Pages/Features
 
 ### Lyrics Analysis
 - Search for songs with autocomplete powered by the Spotify API
